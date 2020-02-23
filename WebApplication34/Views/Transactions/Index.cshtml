@@ -1,0 +1,210 @@
+﻿@model WebApplication34.Paging.PaginatedList<WebApplication34.Data.Transaction>
+@{
+    ViewData["Title"] = "Tra cứu";
+    var title = ViewBag.area == "bank" ? "Tra cứu chuyển khoản" : "Tra cứu chuyển tiền mặt";
+}
+
+<h1>@title</h1>
+@using (Html.BeginForm("Index", "Transactions", FormMethod.Get))
+{
+    <p>
+        <div class="row">
+            <div class="col-md-4">
+                <div class="form-group">
+                    <input id="search" class="form-control" name="search" value="@ViewBag.search" onchange="handleSearch(this);" placeholder="Nhập CMND" />
+                    <input hidden class="form-control" name="area" value="@ViewBag.area" />
+                </div>
+            </div>
+
+            <div class="col-md-2">
+                <div class="form-group">
+                    <input id="year" class="form-control" name="year" value="@ViewBag.year" onchange="handleYear(this);" placeholder="Nhập năm" />
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    @Html.DropDownList("type", new List<SelectListItem> {
+                   new SelectListItem {Value = "",Text="Tất cả",Selected= @ViewBag.type == ""}
+                   ,new SelectListItem {Value = "not",Text="Chưa thanh toán",Selected= @ViewBag.type == "not" },
+                   new SelectListItem {Value = "yet",Text="Đã thanh toán",Selected= @ViewBag.type == "yet" }}, new { @class = "btn btn-info dropdown-toggle" })
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <input type="submit" value="Tìm kiếm" class="btn btn-primary" />
+                </div>
+            </div>
+        </div>
+    </p>
+}
+@if (ViewBag.download != "")
+{
+    <p>
+        <a href="@ViewBag.download"> Tải file báo cáo</a>
+    </p>
+}
+
+@using (Html.BeginForm("Pay", "Transactions", FormMethod.Post, new { id = "formPay" }))
+{
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th><input type="checkbox" onchange="handleChange(this);" /></th>
+                <th>
+                    CMND
+                </th>
+
+                <th width="20%">
+                    @*@Html.DisplayNameFor(model => model.FullName)*@
+                    Họ và tên
+                </th>
+                <th>
+                    @*@Html.DisplayNameFor(model => model.ReceiveMoney)*@
+                    Số tiền nhận
+                </th>
+                <th>
+                    @*@Html.DisplayNameFor(model => model.Tax)*@
+                    Thuế
+                </th>
+                <th>
+                    @*@Html.DisplayNameFor(model => model.RealRecevieMoney)*@
+                    Thực nhận
+                </th>
+                <th>
+                    @*@Html.DisplayNameFor(model => model.Created)*@
+                    Ngày tạo
+                </th>
+                <th>
+                    Thanh toán
+                </th>
+                <th>
+                    Ngày thanh toán
+                </th>
+                <th>Đợt</th>
+                <th>Năm</th>
+                <th width="18%">Hành động</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @if (item.IsPaid)
+                        {
+                            <input disabled type="checkbox" id="@item.Id" name="CheckedIDs" value="@item.Id" />
+                        }
+                        else
+                        {
+                            <input type="checkbox" id="@item.Id" name="CheckedIDs" value="@item.Id" />
+                        }
+
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Cnmd)
+                    </td>
+                    @*<td>
+                            @Html.DisplayFor(modelItem => item.Type)
+                        </td>*@
+                    <td>
+                        @Html.DisplayFor(modelItem => item.FullName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ReceiveMoney)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Tax)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.RealRecevieMoney)
+                    </td>
+                    <td>
+                        @*@Html.DisplayFor(modelItem => item.Created.Value)*@
+                        @item.Created.Value.ToShortDateString()
+                    </td>
+                    <td>
+                        @*@Html.DisplayFor(modelItem => item.IsPaid)*@
+                        @{var paid = item.IsPaid ? "Đã" : "Chưa"; } @paid
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.PaidDate)
+                    </td>
+                    @*<td>
+                            @Html.DisplayFor(modelItem => item.BankAccount.CmndNumber)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Original.Id)
+                        </td>*@
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Batch)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Year)
+                    </td>
+                    <td>
+                        @*<a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |*@
+                        <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                        @if (item.IsPaid)
+                        {
+                            <a asp-action="Payment" asp-route-id="@item.Id">Xem phiếu chi</a>
+                        }
+
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <input hidden class="form-control" id="searchid" name="search" value="" />
+    <input hidden class="form-control" name="area" value="@ViewBag.area" />
+    <input hidden class="form-control" name="year" value="@ViewBag.year" />
+    <div class="form-group">
+        <button onclick="handleSubmit();" class="btn btn-primary">Thanh toán</button>
+    </div>
+}
+@{
+    var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
+    var nextDisabled = !Model.HasNextPage ? "disabled" : "";
+}
+
+
+<a asp-action="Index"
+   asp-route-pageNumber="@(Model.PageIndex - 1)"
+   class="btn btn-default @prevDisabled">
+    Previous
+</a>
+<a asp-action="Index"
+   asp-route-pageNumber="@(Model.PageIndex + 1)"
+   class="btn btn-default @nextDisabled">
+    Next
+</a>
+
+@section Scripts
+{
+    <script>
+        function handleChange(checkbox) {
+            if (checkbox.checked == true) {
+                $('input[type=checkbox]').each(function () {
+                    if (!this.disabled) {
+                        this.checked = true;
+                    }
+
+                });
+            } else {
+                $('input[type=checkbox]').each(function () {
+                    this.checked = false;
+                });
+            }
+        }
+        function handleSearch(textbox) {
+            $('#searchid').val($('#search').val())
+        }
+        function handleYear(textbox) {
+            //$('#searchid').val($('#search').val())
+        }
+        function handleSubmit() {
+            $('#searchid').val($('#search').val())
+            $('#formPay').submit();
+        }
+    </script>
+}

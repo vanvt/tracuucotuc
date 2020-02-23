@@ -1,0 +1,203 @@
+﻿@model WebApplication34.Data.Transaction
+
+@{
+    ViewData["Title"] = "Payment";
+}
+
+
+<div id="print" style="border:solid; padding: 0px 0px 0px 10px;">
+    <dl class="row">
+        <dt class="col-md-12">
+            Đơn vị: CÔNG TY CỔ PHẦN SÔNG BA
+        </dt>
+        <dt class="col-md-12">
+            Địa chỉ: 573 Núi Thành - TP Đà Nẵng
+        </dt>
+        <dt class="col-md-12">
+            <p class="text-center" style="font-size: 30px;">PHIẾU CHI</p>
+        </dt>
+        <dt class="col-md-12 text-center font-weight-light" style="font-style: oblique;font-family: none;">
+            Liên 01: Lưu
+        </dt>
+        <dt class="col-md-12 text-center font-weight-normal" style="font-style: oblique;font-family: none;margin-left: 200px;">
+            Số: @Model.Id
+        </dt>
+        <dt class="col-md-3 font-weight-normal">
+            Họ tên người nhận tiền:
+        </dt>
+        <dt class="col-md-4 font-weight-normal">
+            <input type="text" value="@Model.FullName" />
+        </dt>
+        <dt class="col-md-5 font-weight-normal">
+
+        </dt>
+        <dt class="col-md-3 font-weight-normal">
+            Số CMND:
+        </dt>
+        <dt class="col-md-4 font-weight-normal">
+            <input type="text" value="@Model.Cnmd" />
+        </dt>
+        <dt class="col-md-5 font-weight-normal">
+            Ngày cấp: @Model.Original.CmndIssueDay
+        </dt>
+        <dt class="col-md-3 font-weight-normal">
+            Địa chỉ:
+        </dt>
+        <dt class="col-md-9 font-weight-normal">
+            @Model.Original.Address
+        </dt>
+        <dt class="col-md-3 font-weight-normal">
+            Lý do chi:
+        </dt>
+        <dt class="col-md-9 font-weight-normal">
+            Tiền cổ tức năm @Model.Year đợt @Model.Batch @Model.Original.NumberStockNotDeposite CP x @string.Format("{0:#,##0}", Model.Original.DividendNotDeposite / Model.Original.NumberStockNotDeposite)  đ = @string.Format("{0:#,##0}", Model.Original.DividendNotDeposite)
+        </dt>
+        <dt class="col-md-3 font-weight-normal">
+            Trừ thuế TNCN 5%:
+        </dt>
+        <dt class="col-md-9 font-weight-normal">
+            @string.Format("{0:#,##0}", Model.Tax)
+        </dt>
+        <dt class="col-md-3 font-weight-normal">
+            Số tiền nhận được
+        </dt>
+        <dt class="col-md-9 font-weight-normal">
+            @string.Format("{0:#,##0}", Model.RealRecevieMoney)
+        </dt>
+        <dt class="col-md-3 font-weight-normal">
+            Số tiền nhận được viết bằng chữ
+        </dt>
+        <dt class="col-md-9 font-weight-normal">
+            @WebApplication34.Helper.ConverterMoney.NumberToTextVN(Model.RealRecevieMoney.Value)
+        </dt>
+        <dt class="col-md-4 text-center" style="padding-bottom: 70px;">
+            Phòng TC-KT
+        </dt>
+        <dt class="col-md-4 text-center">
+            Thủ quỹ
+        </dt>
+        <dt class="col-md-4 text-center">
+            Người nhận
+        </dt>
+        <dt class="col-md-4 text-center font-weight-normal">
+            Phạm Thái Hùng
+        </dt>
+        <dt class="col-md-4 text-center font-weight-normal">
+            Võ Thị Minh Thu
+        </dt>
+        <dt class="col-md-4 text-center font-weight-normal">
+            Người nhận
+        </dt>
+    </dl>
+</div>
+<hr />
+<div id="print" style="border:solid; padding: 0px 0px 0px 10px;">
+    <dl class="row">
+        <dt class="col-md-12">
+            Đơn vị: CÔNG TY CỔ PHẦN SÔNG BA
+        </dt>
+        <dt class="col-md-12">
+            Địa chỉ: 573 Núi Thành - TP Đà Nẵng
+        </dt>
+        <dt class="col-md-12">
+            <p class="text-center" style="font-size: 30px;">PHIẾU CHI</p>
+        </dt>
+        <dt class="col-md-12 text-center font-weight-light" style="font-style: oblique;font-family: none;">
+            Liên 02: Giao khách
+        </dt>
+        <dt class="col-md-12 text-center font-weight-normal" style="font-style: oblique;font-family: none;margin-left: 200px;">
+            Số: @Model.Id
+        </dt>
+        <dt class="col-md-3 font-weight-normal">
+            Họ tên người nhận tiền:
+        </dt>
+        <dt class="col-md-4 font-weight-normal">
+            <input type="text" value="@Model.FullName" />
+        </dt>
+        <dt class="col-md-5 font-weight-normal">
+
+        </dt>
+        <dt class="col-md-3 font-weight-normal">
+            Số CMND:
+        </dt>
+        <dt class="col-md-4 font-weight-normal">
+            <input type="text" value="@Model.Cnmd" />
+        </dt>
+        <dt class="col-md-5 font-weight-normal">
+            Ngày cấp: @Model.Original.CmndIssueDay
+        </dt>
+        <dt class="col-md-3 font-weight-normal">
+            Địa chỉ:
+        </dt>
+        <dt class="col-md-9 font-weight-normal">
+            @Model.Original.Address
+        </dt>
+        <dt class="col-md-3 font-weight-normal">
+            Lý do chi:
+        </dt>
+        <dt class="col-md-9 font-weight-normal">
+            Tiền cổ tức năm @Model.Year đợt @Model.Batch @Model.Original.NumberStockNotDeposite CP x @string.Format("{0:#,##0}", Model.Original.DividendNotDeposite / Model.Original.NumberStockNotDeposite)  đ = @string.Format("{0:#,##0}", Model.Original.DividendNotDeposite)
+        </dt>
+        <dt class="col-md-3 font-weight-normal">
+            Trừ thuế TNCN 5%:
+        </dt>
+        <dt class="col-md-9 font-weight-normal">
+            @string.Format("{0:#,##0}", Model.Tax)
+        </dt>
+        <dt class="col-md-3 font-weight-normal">
+            Số tiền nhận được
+        </dt>
+        <dt class="col-md-9 font-weight-normal">
+            @string.Format("{0:#,##0}", Model.RealRecevieMoney)
+        </dt>
+        <dt class="col-md-3 font-weight-normal">
+            Số tiền nhận được viết bằng chữ
+        </dt>
+        <dt class="col-md-9 font-weight-normal">
+            @WebApplication34.Helper.ConverterMoney.NumberToTextVN(Model.RealRecevieMoney.Value)
+        </dt>
+        <dt class="col-md-4 text-center" style="padding-bottom: 70px;">
+            Phòng TC-KT
+        </dt>
+        <dt class="col-md-4 text-center">
+            Thủ quỹ
+        </dt>
+        <dt class="col-md-4 text-center">
+            Người nhận
+        </dt>
+        <dt class="col-md-4 text-center font-weight-normal">
+            Phạm Thái Hùng
+        </dt>
+        <dt class="col-md-4 text-center font-weight-normal">
+            Võ Thị Minh Thu
+        </dt>
+        <dt class="col-md-4 text-center font-weight-normal">
+            Người nhận
+        </dt>
+    </dl>
+</div>
+<div class="form-group no-print">
+    <button onclick="window.print();" class="btn btn-primary">In phiếu chi</button>
+</div>
+@section Scripts
+{
+    <script>
+        function handlePrint() {
+            window.print();
+
+        }
+    </script>
+}
+<style type="text/css">
+    dt {
+        padding: 10px 0px 0px 0px;
+    }
+
+    input[type="text"] {
+        width: 100%;
+    }
+    hr{
+        margin-top: 3rem;
+    margin-bottom: 3rem;
+    }
+</style>

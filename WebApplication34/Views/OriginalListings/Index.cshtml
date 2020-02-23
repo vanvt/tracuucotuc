@@ -1,0 +1,198 @@
+﻿@model WebApplication34.Paging.PaginatedList<WebApplication34.Data.OriginalListing>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Danh sách gốc</h1>
+
+<p>
+    <a asp-action="Create">Tạo mới</a> |
+    <a asp-action="Import">Import</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Họ và tên
+            </th>
+            <th>
+                CMND
+            </th>
+            <th>
+                Ngày cấp
+            </th>
+            <th>
+                Địa chỉ
+            </th>
+            <th>
+                Quốc tịch
+            </th>
+            <th>
+                NumberStockDeposited
+            </th>
+            <th>
+                NumberStockNotDeposite
+            </th>
+            <th>
+                NumberStockTotal
+            </th>
+            <th>
+                DividendDeposited
+            </th>
+            <th>
+                DividendNotDeposite
+            </th>
+            <th>
+                DividendTotal
+            </th>
+            <th>
+                TaxDeposited)
+            </th>
+            <th>
+                TaxNotDeposite)
+            </th>
+            <th>
+                TaxTotal)
+            </th>
+            <th>
+                DividendReceivedDeposited)
+            </th>
+            <th>
+                DividendReceivedNotDeposite)
+            </th>
+            <th>
+                DividendReceivedTotal)
+            </th>
+            <th>
+                Type)
+            </th>
+            <th>
+                AssignmentOrganization)
+            </th>
+            <th>
+                Txnum)
+            </th>
+            <th>
+                Email)
+            </th>
+            <th>
+                Phone)
+            </th>
+            <th>
+                Note)
+            </th>
+            <th>
+                Year)
+            </th>
+            <th>
+                Batch)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FullName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CmndNumber)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CmndIssueDay)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Address)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Country)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.NumberStockDeposited)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.NumberStockNotDeposite)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.NumberStockTotal)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DividendDeposited)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DividendNotDeposite)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DividendTotal)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TaxDeposited)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TaxNotDeposite)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TaxTotal)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DividendReceivedDeposited)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DividendReceivedNotDeposite)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DividendReceivedTotal)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Type)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.AssignmentOrganization)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Txnum)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Email)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Phone)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Note)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Year)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Batch)
+                </td>
+
+                <td>
+                    @*<a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>*@
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+@{
+    var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
+    var nextDisabled = !Model.HasNextPage ? "disabled" : "";
+}
+
+
+<a asp-action="Index"
+   asp-route-pageNumber="@(Model.PageIndex - 1)"
+   class="btn btn-default @prevDisabled">
+    Previous
+</a>
+<a asp-action="Index"
+   asp-route-pageNumber="@(Model.PageIndex + 1)"
+   class="btn btn-default @nextDisabled">
+    Next
+</a>

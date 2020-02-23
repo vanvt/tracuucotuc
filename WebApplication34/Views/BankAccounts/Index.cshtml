@@ -1,0 +1,86 @@
+﻿@model WebApplication34.Paging.PaginatedList<WebApplication34.Data.BankAccount>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+    <h1>Danh sách TKNH</h1>
+<p>
+    @using (Html.BeginForm("Index", "BankAccounts", FormMethod.Get))
+    {
+    <p>
+        <div class="row">
+            <div class="col-md-8">
+                <div class="form-group">
+                    <input id="search" class="form-control" name="search" value="@ViewBag.search" onchange="handleSearch(this);" placeholder="Nhập CMND" />
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <input type="submit" value="Tìm kiếm" class="btn btn-primary" />
+                </div>
+            </div>
+        </div>
+    </p>
+}
+<a asp-action="Create">Tạo mới</a> | <a asp-action="Import">Import</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                CMDN
+            </th>
+            <th>
+                Người hưởng thụ
+            </th>
+            <th>
+                Số tài khoản
+            </th>
+            <th>
+                Ngân hàng
+            </th>
+            @*<th>Hành động</th>*@
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CmndNumber)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Beneficiaries)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.NumberAccount)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Bank)
+                </td>
+                <td>
+                    @*<a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>*@
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+@{
+    var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
+    var nextDisabled = !Model.HasNextPage ? "disabled" : "";
+}
+
+
+<a asp-action="Index"
+   asp-route-pageNumber="@(Model.PageIndex - 1)"
+   class="btn btn-default @prevDisabled">
+    Previous
+</a>
+<a asp-action="Index"
+   asp-route-pageNumber="@(Model.PageIndex + 1)"
+   class="btn btn-default @nextDisabled">
+    Next
+</a>

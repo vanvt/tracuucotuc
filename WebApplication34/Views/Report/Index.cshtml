@@ -1,0 +1,68 @@
+﻿@model WebApplication34.Models.ReportVM
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Báo cáo tổng hợp</h1>
+<h3>Đã chi</h3>
+<table class="table table-hover">
+    <thead>
+        <tr>
+
+            <th scope="col">Đã chi</th>
+            <th scope="col">Số tiền</th>
+            <th scope="col">Số cổ đông</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+
+            <td>Tiền mặt</td>
+            <td>@Model.tienMatDachi_tien</td>
+            <td>@Model.tienMatDachi_cd</td>
+        </tr>
+        <tr>
+
+            <td>Chuyển khoản</td>
+            <td>@Model.chuyenKhoanDachi_tien</td>
+            <td>@Model.chuyenKhoanDachi_cd</td>
+        </tr>
+        <tr>
+            <td>Tổng</td>
+            <td>@Model.tongDachi_tien</td>
+            <td>@Model.tongDachi_cd</td>
+        </tr>
+    </tbody>
+</table>
+
+<hr />
+<h3>Còn lại</h3>
+<table class="table table-hover">
+    <thead>
+        <tr>
+
+            <th scope="col">Còn lại</th>
+            <th scope="col">Số tiền</th>
+            <th scope="col">Số cổ đông</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+
+            <td>Tiền mặt</td>
+            <td>@Model.tienMatConlai_tien</td>
+            <td>@Model.tienMatConlai_cd</td>
+        </tr>
+        <tr>
+
+            <td>Chuyển khoản</td>
+            <td>@Model.chuyenKhoanConlai_tien</td>
+            <td>@Model.chuyenKhoanConlai_cd</td>
+        </tr>
+        <tr>
+            <td>Tổng</td>
+            <td>@Model.tongConlai_tien</td>
+            <td>@Model.tongConlai_cd</td>
+        </tr>
+    </tbody>
+</table>
