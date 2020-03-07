@@ -60,7 +60,7 @@ namespace WebApplication34.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,FullName,CmndNumber,CmndIssueDay,Address,Country,NumberStockDeposited,NumberStockNotDeposite,NumberStockTotal,DividendDeposited,DividendNotDeposite,DividendTotal,TaxDeposited,TaxNotDeposite,TaxTotal,DividendReceivedDeposited,DividendReceivedNotDeposite,DividendReceivedTotal,Type,AssignmentOrganization,Txnum,Email,Phone,Note,Year,Batch,Created,Updated,CreatedBy,UpdateBy,Tesss")] OriginalListing originalListing)
+        public async Task<IActionResult> Create(OriginalListing originalListing)
         {
             if (ModelState.IsValid)
             {
@@ -92,7 +92,7 @@ namespace WebApplication34.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(long id, [Bind("Id,FullName,CmndNumber,CmndIssueDay,Address,Country,NumberStockDeposited,NumberStockNotDeposite,NumberStockTotal,DividendDeposited,DividendNotDeposite,DividendTotal,TaxDeposited,TaxNotDeposite,TaxTotal,DividendReceivedDeposited,DividendReceivedNotDeposite,DividendReceivedTotal,Type,AssignmentOrganization,Txnum,Email,Phone,Note,Year,Batch,Created,Updated,CreatedBy,UpdateBy,Tesss")] OriginalListing originalListing)
+        public async Task<IActionResult> Edit(long id, OriginalListing originalListing)
         {
             if (id != originalListing.Id)
             {

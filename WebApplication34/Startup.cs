@@ -71,7 +71,7 @@ namespace WebApplication34
             {
                 routes.MapRoute(
                     name: "default",
-                    template: "{controller=Transactions}/{action=Index}/{id?}");
+                    template: "{controller=Home}/{action=Index}/{id?}");
             });
         }
     }

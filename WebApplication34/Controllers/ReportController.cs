@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using WebApplication34.Data;
 using WebApplication34.Models;
+using WebApplication34.Paging;
 
 namespace WebApplication34.Controllers
 {
@@ -17,23 +19,32 @@ namespace WebApplication34.Controllers
         }
         public IActionResult Index()
         {
-            var data = new ReportVM
+            ReportByYearListVM reportByYearListVM = new ReportByYearListVM();
+
+            var data = _context.Transaction.Where(e => e.IsPaid).GroupBy(e => e.Year).Select(e => new ReportByYearVM
             {
-                tongDachi_tien = _context.Transaction.Where(e => e.IsPaid).Sum(e => e.ReceiveMoney),
-                chuyenKhoanConlai_cd = _context.Transaction.Where(e => e.IsPaid==false).Where(e=>e.BankAccountId!=null).Count(),
-                chuyenKhoanConlai_tien = _context.Transaction.Where(e => e.IsPaid == false).Where(e => e.BankAccountId != null).Sum(e => e.ReceiveMoney),
-                chuyenKhoanDachi_cd = _context.Transaction.Where(e => e.IsPaid == true).Where(e => e.BankAccountId != null).Count(),
-                chuyenKhoanDachi_tien = _context.Transaction.Where(e => e.IsPaid == true).Where(e => e.BankAccountId != null).Sum(e => e.ReceiveMoney),
-                tienMatConlai_cd = _context.Transaction.Where(e => e.IsPaid == false).Where(e => e.BankAccountId == null).Count(),
-                tienMatConlai_tien = _context.Transaction.Where(e => e.IsPaid == false).Where(e => e.BankAccountId == null).Sum(e => e.ReceiveMoney),
-                tienMatDachi_cd = _context.Transaction.Where(e => e.IsPaid == true).Where(e => e.BankAccountId == null).Count(),
-                tienMatDachi_tien = _context.Transaction.Where(e => e.IsPaid == true).Where(e => e.BankAccountId == null).Sum(e => e.ReceiveMoney),
-                tongConlai_cd = _context.Transaction.Where(e => e.IsPaid == false).Count(),
-                tongConlai_tien = _context.Transaction.Where(e => e.IsPaid == false).Sum(e => e.ReceiveMoney),
-                tongDachi_cd = _context.Transaction.Where(e => e.IsPaid == true).Count()
-            };
-          
-            return View(data);
+                chuyenKhoan_cd = e.Where(c => c.BankAccount != null).Count(),
+                chuyenKhoan_tien = e.Where(c => c.BankAccount != null).Sum(v => v.ReceiveMoney),
+                tienMat_cd = e.Where(c => c.BankAccount == null).Count(),
+                tienMat_tien = e.Where(c => c.BankAccount == null).Sum(v => v.ReceiveMoney),
+                tong_cd = e.Count(),
+                tong_tien = e.Sum(v => v.ReceiveMoney),
+                Year = e.Key.Value
+            });
+            var data1 = _context.Transaction.Where(e => e.IsPaid == false).GroupBy(e => e.Year).Select(e => new ReportByYearVM
+            {
+                chuyenKhoan_cd = e.Where(c => c.BankAccountId != null).Count(),
+                chuyenKhoan_tien = e.Where(c => c.BankAccountId != null).Sum(v => v.ReceiveMoney),
+                tienMat_cd = e.Where(c => c.BankAccountId == null).Count(),
+                tienMat_tien = e.Where(c => c.BankAccountId == null).Sum(v => v.ReceiveMoney),
+                tong_cd = e.Count(),
+                tong_tien = e.Sum(v => v.ReceiveMoney),
+                Year = e.Key.Value
+            });
+
+            reportByYearListVM.PaidReport = data;
+            reportByYearListVM.RemainReport = data1;
+            return View(reportByYearListVM);
         }
     }
 }

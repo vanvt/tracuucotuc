@@ -181,7 +181,7 @@ namespace WebApplication34.Helper
             {
                 // ...create a new row, and append a set of this row's data to it.
                 ++rowIndex;
-                var newExcelRow = new Row { RowIndex = rowIndex };  // add a row at the top of spreadsheet
+                var newExcelRow = new Row { RowIndex = rowIndex};  // add a row at the top of spreadsheet
                 sheetData.Append(newExcelRow);
 
                 for (int colInx = 0; colInx < numberOfColumns; colInx++)

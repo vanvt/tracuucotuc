@@ -1,4 +1,4 @@
-﻿@model WebApplication34.Models.ReportVM
+﻿@model WebApplication34.Models.ReportByYearListVM
 @{
     ViewData["Title"] = "Index";
 }
@@ -9,29 +9,25 @@
     <thead>
         <tr>
 
-            <th scope="col">Đã chi</th>
-            <th scope="col">Số tiền</th>
-            <th scope="col">Số cổ đông</th>
+            <th scope="col">Tiền mặt/số cổ đông</th>
+            <th scope="col">Chuyển khoản/số cổ đông</th>
+            <th scope="col">Tổng tiền/số cổ đông</th>
+            <th scope="col">Năm</th>
         </tr>
     </thead>
     <tbody>
-        <tr>
 
-            <td>Tiền mặt</td>
-            <td>@Model.tienMatDachi_tien</td>
-            <td>@Model.tienMatDachi_cd</td>
-        </tr>
-        <tr>
+        @foreach (var item in Model.PaidReport)
+        {
 
-            <td>Chuyển khoản</td>
-            <td>@Model.chuyenKhoanDachi_tien</td>
-            <td>@Model.chuyenKhoanDachi_cd</td>
-        </tr>
         <tr>
-            <td>Tổng</td>
-            <td>@Model.tongDachi_tien</td>
-            <td>@Model.tongDachi_cd</td>
+            <td>@item.tienMat_tien.Value.ToString("N0")/@item.tienMat_cd</td>
+            <td>@item.chuyenKhoan_tien.Value.ToString("N0")/@item.chuyenKhoan_cd</td>
+            <td>@item.tong_tien.Value.ToString("N0")/@item.tong_cd</td>
+            <td>@item.Year</td>
         </tr>
+        }
+
     </tbody>
 </table>
 
@@ -41,28 +37,24 @@
     <thead>
         <tr>
 
-            <th scope="col">Còn lại</th>
-            <th scope="col">Số tiền</th>
-            <th scope="col">Số cổ đông</th>
+            <th scope="col">Tiền mặt/số cổ đông</th>
+            <th scope="col">Chuyển khoản/số cổ đông</th>
+            <th scope="col">Tổng tiền/số cổ đông</th>
+            <th scope="col">Năm</th>
         </tr>
     </thead>
     <tbody>
-        <tr>
 
-            <td>Tiền mặt</td>
-            <td>@Model.tienMatConlai_tien</td>
-            <td>@Model.tienMatConlai_cd</td>
-        </tr>
-        <tr>
+        @foreach (var item in Model.RemainReport)
+        {
 
-            <td>Chuyển khoản</td>
-            <td>@Model.chuyenKhoanConlai_tien</td>
-            <td>@Model.chuyenKhoanConlai_cd</td>
-        </tr>
         <tr>
-            <td>Tổng</td>
-            <td>@Model.tongConlai_tien</td>
-            <td>@Model.tongConlai_cd</td>
+            <td>@item.tienMat_tien.Value.ToString("N0")/@item.tienMat_cd</td>
+            <td>@item.chuyenKhoan_tien.Value.ToString("N0")/@item.chuyenKhoan_cd</td>
+            <td>@item.tong_tien.Value.ToString("N0")/@item.tong_cd</td>
+            <td>@item.Year</td>
         </tr>
+        }
+
     </tbody>
 </table>

@@ -1,0 +1,156 @@
+﻿@model List<TransactionExportVM>
+@{
+    ViewData["Title"] = "PaymentMutiple";
+}
+
+<h1>Báo cáo giao dịch</h1>
+<p>
+    <a class="btn btn-success" id="downloadLink" onclick="exportF(this)"> Tải file báo cáo</a>
+</p>
+<div id="table-export">
+    Đơn vị: CÔNG TY CỔ PHẦN SÔNG BA
+    <br />
+    Địa chỉ: 573 Núi Thành - TP Đà Nẵng
+    <table>
+        <thead>
+            <tr>
+            </tr>
+            <tr>
+                <th colspan="9" rowspan="4" style="font-size: 50px;">PHIẾU CHI</th>
+            </tr>
+            <tr></tr>
+            <tr></tr>
+            <tr></tr>
+        </thead>
+    </table>
+    <table class="table table-bordered" border="1">
+        <thead style="background: azure;">
+            @*<tr>
+                    <th colspan="9" rowspan="2">
+                        Công ty cổ phần sông ba
+                    </th>
+                </tr>
+                <tr>
+                </tr>*@
+            <tr>
+                <th>
+                    STT
+                </th>
+                <th>
+                    CMND
+                </th>
+                <th width="20%">
+                    Họ và tên
+                </th>
+                <th>
+                    Người hưởng thụ
+                </th>
+                <th>
+                    Số tài khoản
+                </th>
+                <th>
+                    Ngân hàng
+                </th>
+                <th>
+                    Cổ tức
+                </th>
+                <th>
+                    Thuế
+                </th>
+                <th>
+                    Còn nhận được
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @{
+                var index = 0;
+            }
+            @foreach (var item in Model)
+            {
+                index++;
+                <tr style="height:40px">
+                    <td>
+                        @index
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.cmnd_number)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.full_name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.beneficiaries)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.number_account)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.bank)
+                    </td>
+                    <td>
+                        @item.get_revc_money.Value.ToString("N0")
+                    </td>
+                    <td>
+                        @item.tax.Value.ToString("N0")
+                    </td>
+                    <td>
+                        @item.get_revc_real_money.Value.ToString("N0")
+                    </td>
+
+                </tr>
+            }
+            <tr style="font-weight:bolder;height:50px;">
+
+                <td colspan="6">
+                    Tổng tiền
+                </td>
+                <td>@Model.Sum(e => e.get_revc_money).Value.ToString("N0")</td>
+                <td>@Model.Sum(e => e.tax).Value.ToString("N0")</td>
+                <td>@Model.Sum(e => e.get_revc_real_money).Value.ToString("N0")</td>
+            </tr>
+        </tbody>
+    </table>
+    <table>
+        <thead>
+            <tr>
+            </tr>
+            <tr>
+                <td colspan="2"></td>
+                <td colspan="4" rowspan="1" style="font-size: 20px;">Phòng TC-KT</td>
+                <td colspan="3" rowspan="1" style="font-size: 20px;">Thủ quỹ</td>
+            </tr>
+            <tr style="height:50px">
+            </tr>
+            <tr>
+                <td colspan="2"></td>
+                <td colspan="4">Phạm Thái Hùng</td>
+                <td colspan="3">Võ Thị Minh Thu</td>
+            </tr>
+        </thead>
+    </table>
+</div>
+@section Scripts
+{
+    <script>
+     
+        function exportF(elem) {
+            var table = document.getElementById("table-export");
+            var html = table.outerHTML;
+            var url = 'data:application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,' + html; // Set your html table into url
+            elem.setAttribute("href", url);
+            elem.setAttribute("download", "export.xls"); // Choose the file name
+            return false;
+        }
+         function download() {
+            var table = document.getElementById("table-export");
+            var html = table.outerHTML;
+            var url = 'data:application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,' + html; // Set your html table into url
+            //elem.setAttribute("href", url);
+             //elem.setAttribute("download", "export.xls"); // Choose the file name
+             location.href = url;
+
+            return false;
+        }
+    </script>
+}

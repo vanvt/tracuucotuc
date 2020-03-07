@@ -1,92 +1,103 @@
-﻿@model WebApplication34.Paging.PaginatedList<WebApplication34.Data.OriginalListing>
+﻿@model IEnumerable<WebApplication34.Data.OriginalListing>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "View";
 }
 
-<h1>Danh sách gốc</h1>
+<h1>Danh sách</h1>
 
 <p>
-    <a asp-action="Create">Tạo mới</a> |
-    <a asp-action="Import">Import</a>
+    <a asp-action="Create">Tạo mới</a>
 </p>
 <table class="table">
     <thead>
         <tr>
             <th>
-                Họ và tên
+                @Html.DisplayNameFor(model => model.FullName)
             </th>
             <th>
-                CMND
+                @Html.DisplayNameFor(model => model.CmndNumber)
             </th>
             <th>
-                Ngày cấp
+                @Html.DisplayNameFor(model => model.CmndIssueDay)
             </th>
             <th>
-                Địa chỉ
+                @Html.DisplayNameFor(model => model.Address)
             </th>
             <th>
-                Quốc tịch
+                @Html.DisplayNameFor(model => model.Country)
             </th>
             <th>
-                NumberStockDeposited
+                @Html.DisplayNameFor(model => model.NumberStockDeposited)
             </th>
             <th>
-                NumberStockNotDeposite
+                @Html.DisplayNameFor(model => model.NumberStockNotDeposite)
             </th>
             <th>
-                NumberStockTotal
+                @Html.DisplayNameFor(model => model.NumberStockTotal)
             </th>
             <th>
-                DividendDeposited
+                @Html.DisplayNameFor(model => model.DividendDeposited)
             </th>
             <th>
-                DividendNotDeposite
+                @Html.DisplayNameFor(model => model.DividendNotDeposite)
             </th>
             <th>
-                DividendTotal
+                @Html.DisplayNameFor(model => model.DividendTotal)
             </th>
             <th>
-                TaxDeposited)
+                @Html.DisplayNameFor(model => model.TaxDeposited)
             </th>
             <th>
-                TaxNotDeposite)
+                @Html.DisplayNameFor(model => model.TaxNotDeposite)
             </th>
             <th>
-                TaxTotal)
+                @Html.DisplayNameFor(model => model.TaxTotal)
             </th>
             <th>
-                DividendReceivedDeposited)
+                @Html.DisplayNameFor(model => model.DividendReceivedDeposited)
             </th>
             <th>
-                DividendReceivedNotDeposite)
+                @Html.DisplayNameFor(model => model.DividendReceivedNotDeposite)
             </th>
             <th>
-                DividendReceivedTotal)
+                @Html.DisplayNameFor(model => model.DividendReceivedTotal)
             </th>
             <th>
-                Type)
+                @Html.DisplayNameFor(model => model.Type)
             </th>
             <th>
-                AssignmentOrganization)
+                @Html.DisplayNameFor(model => model.AssignmentOrganization)
             </th>
             <th>
-                Txnum)
+                @Html.DisplayNameFor(model => model.Txnum)
             </th>
             <th>
-                Email)
+                @Html.DisplayNameFor(model => model.Email)
             </th>
             <th>
-                Phone)
+                @Html.DisplayNameFor(model => model.Phone)
             </th>
             <th>
-                Note)
+                @Html.DisplayNameFor(model => model.Note)
             </th>
             <th>
-                Year)
+                @Html.DisplayNameFor(model => model.Year)
             </th>
             <th>
-                Batch)
+                @Html.DisplayNameFor(model => model.Batch)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Created)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Updated)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CreatedBy)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.UpdateBy)
             </th>
             <th></th>
         </tr>
@@ -170,29 +181,24 @@
                 <td>
                     @Html.DisplayFor(modelItem => item.Batch)
                 </td>
-
                 <td>
-                    @*<a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                    @Html.DisplayFor(modelItem => item.Created)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Updated)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CreatedBy)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.UpdateBy)
+                </td>
+                
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
                     <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>*@
                 </td>
             </tr>
         }
     </tbody>
 </table>
-@{
-    var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
-    var nextDisabled = !Model.HasNextPage ? "disabled" : "";
-}
-
-
-<a asp-action="Index"
-   asp-route-pageNumber="@(Model.PageIndex - 1)"
-   class="btn btn-default @prevDisabled">
-    Previous
-</a>
-<a asp-action="Index"
-   asp-route-pageNumber="@(Model.PageIndex + 1)"
-   class="btn btn-default @nextDisabled">
-    Next
-</a>

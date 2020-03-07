@@ -37,131 +37,153 @@
         </div>
     </p>
 }
-@if (ViewBag.download != "")
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <div class="alert alert-success">
+            <strong>Tổng tiền!</strong> @ViewBag.total
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="alert alert-success">
+            <strong>Đã thanh toán!</strong> @ViewBag.paid
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="alert alert-success">
+            <strong>Chưa thanh toán!</strong> @ViewBag.notpay
+        </div>
+    </div>
+</div>
+
+@if (Model.Count() > 0)
 {
-    <p>
-        <a href="@ViewBag.download"> Tải file báo cáo</a>
-    </p>
-}
 
-@using (Html.BeginForm("Pay", "Transactions", FormMethod.Post, new { id = "formPay" }))
-{
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th><input type="checkbox" onchange="handleChange(this);" /></th>
-                <th>
-                    CMND
-                </th>
+    @using (Html.BeginForm("Pay", "Transactions", FormMethod.Post, new { id = "formPay" }))
+    {
 
-                <th width="20%">
-                    @*@Html.DisplayNameFor(model => model.FullName)*@
-                    Họ và tên
-                </th>
-                <th>
-                    @*@Html.DisplayNameFor(model => model.ReceiveMoney)*@
-                    Số tiền nhận
-                </th>
-                <th>
-                    @*@Html.DisplayNameFor(model => model.Tax)*@
-                    Thuế
-                </th>
-                <th>
-                    @*@Html.DisplayNameFor(model => model.RealRecevieMoney)*@
-                    Thực nhận
-                </th>
-                <th>
-                    @*@Html.DisplayNameFor(model => model.Created)*@
-                    Ngày tạo
-                </th>
-                <th>
-                    Thanh toán
-                </th>
-                <th>
-                    Ngày thanh toán
-                </th>
-                <th>Đợt</th>
-                <th>Năm</th>
-                <th width="18%">Hành động</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var item in Model)
-            {
+        <table class="table table-hover">
+            <thead>
                 <tr>
-                    <td>
-                        @if (item.IsPaid)
-                        {
-                            <input disabled type="checkbox" id="@item.Id" name="CheckedIDs" value="@item.Id" />
-                        }
-                        else
-                        {
-                            <input type="checkbox" id="@item.Id" name="CheckedIDs" value="@item.Id" />
-                        }
+                    <th><input type="checkbox" onchange="handleChange(this);" /></th>
+                    <th>
+                        CMND
+                    </th>
 
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Cnmd)
-                    </td>
-                    @*<td>
-                            @Html.DisplayFor(modelItem => item.Type)
-                        </td>*@
-                    <td>
-                        @Html.DisplayFor(modelItem => item.FullName)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.ReceiveMoney)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Tax)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.RealRecevieMoney)
-                    </td>
-                    <td>
-                        @*@Html.DisplayFor(modelItem => item.Created.Value)*@
-                        @item.Created.Value.ToShortDateString()
-                    </td>
-                    <td>
-                        @*@Html.DisplayFor(modelItem => item.IsPaid)*@
-                        @{var paid = item.IsPaid ? "Đã" : "Chưa"; } @paid
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.PaidDate)
-                    </td>
-                    @*<td>
-                            @Html.DisplayFor(modelItem => item.BankAccount.CmndNumber)
+                    <th width="20%">
+                        @*@Html.DisplayNameFor(model => model.FullName)*@
+                        Họ và tên
+                    </th>
+                    <th>
+                        @*@Html.DisplayNameFor(model => model.ReceiveMoney)*@
+                        Số tiền nhận
+                    </th>
+                    <th>
+                        @*@Html.DisplayNameFor(model => model.Tax)*@
+                        Thuế
+                    </th>
+                    <th>
+                        @*@Html.DisplayNameFor(model => model.RealRecevieMoney)*@
+                        Thực nhận
+                    </th>
+                    <th>
+                        @*@Html.DisplayNameFor(model => model.Created)*@
+                        Ngày tạo
+                    </th>
+                    <th>
+                        Thanh toán
+                    </th>
+                    <th>
+                        Ngày thanh toán
+                    </th>
+                    <th>Đợt</th>
+                    <th>Năm</th>
+                    <th width="18%">Hành động</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @if (item.IsPaid)
+                            {
+                                <input disabled type="checkbox" id="@item.Id" name="CheckedIDs" value="@item.Id" />
+                            }
+                            else
+                            {
+                                <input type="checkbox" id="@item.Id" name="CheckedIDs" value="@item.Id" />
+                            }
+
                         </td>
                         <td>
-                            @Html.DisplayFor(modelItem => item.Original.Id)
-                        </td>*@
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Batch)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Year)
-                    </td>
-                    <td>
-                        @*<a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |*@
-                        <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                        @if (item.IsPaid)
-                        {
-                            <a asp-action="Payment" asp-route-id="@item.Id">Xem phiếu chi</a>
-                        }
+                            @Html.DisplayFor(modelItem => item.Cnmd)
+                        </td>
+                        @*<td>
+                                @Html.DisplayFor(modelItem => item.Type)
+                            </td>*@
+                        <td>
+                            @Html.DisplayFor(modelItem => item.FullName)
+                        </td>
+                        <td>
+                            @item.ReceiveMoney.Value.ToString("N0")
+                        </td>
+                        <td>
+                            @item.Tax.Value.ToString("N0")
+                        </td>
+                        <td>
+                            @item.RealRecevieMoney.Value.ToString("N0")
+                        </td>
+                        <td>
+                            @*@Html.DisplayFor(modelItem => item.Created.Value)*@
+                            @item.Created.Value.ToShortDateString()
+                        </td>
+                        <td>
+                            @*@Html.DisplayFor(modelItem => item.IsPaid)*@
+                            @{var paid = item.IsPaid ? "Đã" : "Chưa"; } @paid
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.PaidDate)
+                        </td>
+                        @*<td>
+                                @Html.DisplayFor(modelItem => item.BankAccount.CmndNumber)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Original.Id)
+                            </td>*@
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Batch)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Year)
+                        </td>
+                        <td>
+                            @*<a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |*@
+                            <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                            @if (item.IsPaid)
+                            {
+                                <a asp-action="Payment" asp-route-id="@item.Id">Xem phiếu chi</a>
+                            }
 
-                    </td>
-                </tr>
-            }
-        </tbody>
-    </table>
-    <input hidden class="form-control" id="searchid" name="search" value="" />
-    <input hidden class="form-control" name="area" value="@ViewBag.area" />
-    <input hidden class="form-control" name="year" value="@ViewBag.year" />
-    <div class="form-group">
-        <button onclick="handleSubmit();" class="btn btn-primary">Thanh toán</button>
-    </div>
-}
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+        <input hidden class="form-control" id="searchid" name="search" value="" />
+        <input hidden class="form-control" name="area" value="@ViewBag.area" />
+        <input hidden class="form-control" name="year" value="@ViewBag.year" />
+        <div class="form-group">
+            <button onclick="handleSubmit();" class="btn btn-primary">Thanh toán</button>
+        </div>
+    }
+    }
+    else
+    {
+        <p style="text-align:center">Không tìm thấy dữ liệu!</p>
+    }
 @{
     var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
     var nextDisabled = !Model.HasNextPage ? "disabled" : "";
@@ -205,6 +227,14 @@
         function handleSubmit() {
             $('#searchid').val($('#search').val())
             $('#formPay').submit();
+        }
+        function exportF(elem) {
+            var table = document.getElementById("table-export");
+            var html = table.outerHTML;
+            var url = 'data:application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,' + html; // Set your html table into url
+            elem.setAttribute("href", url);
+            elem.setAttribute("download", "export.xls"); // Choose the file name
+            return false;
         }
     </script>
 }

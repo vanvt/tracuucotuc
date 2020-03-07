@@ -15,11 +15,11 @@ using WebApplication34.Paging;
 
 namespace WebApplication34.Controllers
 {
-    public class TransactionsController : Controller
+    public class TransactionsTotalController : Controller
     {
         private readonly SecuritiStockContext _context;
         private readonly IMapper _mapper;
-        public TransactionsController(SecuritiStockContext context, IMapper mapper)
+        public TransactionsTotalController(SecuritiStockContext context, IMapper mapper)
         {
             _context = context;
             _mapper = mapper;
@@ -32,13 +32,12 @@ namespace WebApplication34.Controllers
             ViewBag.area = area;
             ViewBag.type = type;
             ViewBag.year = year;
-            ViewBag.download = download;
-            var data = _context.Transaction.AsQueryable();
+            var data = _context.Transaction.Include(e=>e.Original).AsQueryable();
             if (!string.IsNullOrEmpty(search))
             {
                 data = data.Where(e => e.Cnmd.Contains(search));
             }
-            if ("cash".Equals(area))
+            if (string.IsNullOrEmpty(area))
             {
                 data = data.Where(e => e.BankAccountId == null);
             }
@@ -60,9 +59,7 @@ namespace WebApplication34.Controllers
                     int.TryParse(year, out yearInt);
                 data = data.Where(e => e.Year == yearInt);
             }
-            ViewBag.total = (data.Sum(e => e.ReceiveMoney)??0).ToString("N0");
-            ViewBag.notpay = (data.Where(e=>e.IsPaid==false).Sum(e => e.ReceiveMoney)??0).ToString("N0");
-            ViewBag.paid = (data.Where(e=>e.IsPaid==true).Sum(e => e.ReceiveMoney)??0).ToString("N0");
+         
             return View(await PaginatedList<Transaction>.CreateAsync(data.AsNoTracking(), pageNumber, 20));
         }
 
@@ -135,7 +132,7 @@ namespace WebApplication34.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(long id, Transaction transaction)
+        public async Task<IActionResult> Edit(long id, [Bind("Id,Cnmd,Type,FullName,ReceiveMoney,Tax,RealRecevieMoney,Created,OriginalId,BankAccountId,IsPaid,PaidDate")] Transaction transaction)
         {
             if (id != transaction.Id)
             {
@@ -240,11 +237,14 @@ namespace WebApplication34.Controllers
                                 full_name = c.FullName,
                                 get_revc_money = c.ReceiveMoney,
                                 get_revc_real_money = c.RealRecevieMoney,
-                                number_account =" " +c.BankAccount.NumberAccount.ToString(),
+                                number_account = c.BankAccount.NumberAccount,
                                 tax = c.Tax
                             }).ToList();
-                            return View("PaymentMutiple", export);
-                            //ExportExcel.CreateExcelDocument(export, filePath);
+
+                            ExportExcel.CreateExcelDocument(export, filePath);
+
+                        
+
 
                         }
                         else
