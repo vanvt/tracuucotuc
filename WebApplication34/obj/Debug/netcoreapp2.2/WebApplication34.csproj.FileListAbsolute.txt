@@ -52,3 +52,4 @@ C:\Users\votha\source\repos\WebApplication34\WebApplication34\obj\Debug\netcorea
 C:\Users\votha\source\repos\WebApplication34\WebApplication34\obj\Debug\netcoreapp2.2\Razor\Views\TransactionsTotal\Index.cshtml.g.cs
 C:\Users\votha\source\repos\WebApplication34\WebApplication34\obj\Debug\netcoreapp2.2\Razor\Views\Transactions\PaymentMutiple.cshtml.g.cs
 C:\Users\votha\source\repos\WebApplication34\WebApplication34\obj\Debug\netcoreapp2.2\Razor\Views\Transactions\EditAdd.cshtml.g.cs
+C:\Users\votha\source\repos\WebApplication34\WebApplication34\obj\Debug\netcoreapp2.2\WebApplication34.csprojAssemblyReference.cache

@@ -86,16 +86,16 @@
                             @Html.DisplayFor(modelItem => item.FullName)
                         </td>
                         <td>
-                            @Html.DisplayFor(modelItem => item.Original.NumberStockNotDeposite)
+                         @item.Original.NumberStockNotDeposite.Value.ToString("N0")
                         </td>
                         <td>
-                            @Html.DisplayFor(modelItem => item.Original.DividendNotDeposite)
+                            @item.Original.DividendNotDeposite.Value.ToString("N0")
                         </td>
                         <td>
-                            @Html.DisplayFor(modelItem => item.Original.TaxNotDeposite)
+                            @item.Original.TaxNotDeposite.Value.ToString("N0")
                         </td>
                         <td>
-                            @Html.DisplayFor(modelItem => item.Original.DividendReceivedNotDeposite)
+                            @item.Original.DividendReceivedNotDeposite.Value.ToString("N0")
                         </td>
                         <td>
                             @Html.DisplayFor(modelItem => item.Batch)
