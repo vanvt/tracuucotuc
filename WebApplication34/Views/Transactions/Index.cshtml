@@ -60,14 +60,17 @@
 @if (Model.Count() > 0)
 {
 
-
     @using (Html.BeginForm("Pay", "Transactions", FormMethod.Post, new { id = "formPay" }))
     {
 
         <table class="table table-hover">
             <thead>
                 <tr>
-                    <th><input type="checkbox" onchange="handleChange(this);" /></th>
+                    @if (ViewBag.area == "bank")
+                    {
+                        <th><input type="checkbox" onchange="handleChange(this);" /></th>
+                    }
+
                     <th>
                         CMND
                     </th>
@@ -101,6 +104,9 @@
                     <th>Đợt</th>
                     <th>Năm</th>
                     <th width="18%">Hành động</th>
+                    <th>
+                        <partial name="_ShowDisplayRow" />
+                    </th>
                 </tr>
             </thead>
             <tbody>
@@ -145,7 +151,15 @@
                             @{var paid = item.IsPaid ? "Đã" : "Chưa"; } @paid
                         </td>
                         <td>
-                            @Html.DisplayFor(modelItem => item.PaidDate)
+                            @if (item.IsPaid)
+                            {
+                                @Html.DisplayFor(modelItem => item.PaidDate)
+                            }
+                            @if (!item.IsPaid)
+                            {
+                                <button class="btn btn-sm btn-success" onclick="handleSubmitSingle(@item.Id)">Thanh toán</button>
+                            }
+
                         </td>
                         @*<td>
                                 @Html.DisplayFor(modelItem => item.BankAccount.CmndNumber)
@@ -175,31 +189,21 @@
         <input hidden class="form-control" id="searchid" name="search" value="" />
         <input hidden class="form-control" name="area" value="@ViewBag.area" />
         <input hidden class="form-control" name="year" value="@ViewBag.year" />
-        <div class="form-group">
-            <button onclick="handleSubmit();" class="btn btn-primary">Thanh toán</button>
-        </div>
+        if (ViewBag.area == "bank")
+        {
+            <div class="form-group">
+                <button onclick="handleSubmit();" class="btn btn-primary">Thanh toán</button>
+            </div>
+        }
+
     }
-    }
-    else
-    {
-        <p style="text-align:center">Không tìm thấy dữ liệu!</p>
-    }
-@{
-    var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
-    var nextDisabled = !Model.HasNextPage ? "disabled" : "";
+}
+else
+{
+    <p style="text-align:center">Không tìm thấy dữ liệu!</p>
 }
 
-
-<a asp-action="Index"
-   asp-route-pageNumber="@(Model.PageIndex - 1)"
-   class="btn btn-default @prevDisabled">
-    Previous
-</a>
-<a asp-action="Index"
-   asp-route-pageNumber="@(Model.PageIndex + 1)"
-   class="btn btn-default @nextDisabled">
-    Next
-</a>
+<partial name="_Pagingvan" />
 
 @section Scripts
 {
@@ -227,6 +231,14 @@
         function handleSubmit() {
             $('#searchid').val($('#search').val())
             $('#formPay').submit();
+        }
+        function handleSubmitSingle(id) {
+
+
+            $('#' + id).prop('checked', true);
+            $('#searchid').val($('#search').val());
+            $('#formPay').submit();
+
         }
         function exportF(elem) {
             var table = document.getElementById("table-export");

@@ -23,7 +23,7 @@ namespace WebApplication34.Paging
         {
             get
             {
-                return (PageIndex > 1);
+                return (ListPageItem.First() > 1);
             }
         }
 
@@ -34,6 +34,29 @@ namespace WebApplication34.Paging
                 return (PageIndex < TotalPages);
             }
         }
+        public List<int> ListPageItem {
+        get
+            {
+                if(PageIndex < 3)
+                {
+                    return Enumerable.Range(IndexDisplay, 5).ToList();
+                }
+                else
+                {
+                    return Enumerable.Range(IndexDisplay - 2 , 5).ToList();
+                }
+               
+
+            }
+        }
+        public int IndexDisplay
+        {
+            get
+            {
+                return this.PageIndex - 2 > 0 ? this.PageIndex : 1;
+            }
+        }
+       
 
         public static async Task<PaginatedList<T>> CreateAsync(IQueryable<T> source, int pageIndex, int pageSize)
         {

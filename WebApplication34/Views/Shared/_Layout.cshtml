@@ -39,22 +39,22 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            <a class="nav-link" asp-area="cash" asp-controller="Transactions" asp-action="Index">Thanh toán tiền mặt</a>
+                            <a class="nav-link" id="cash" asp-area="cash" asp-controller="Transactions" asp-action="Index">Thanh toán tiền mặt</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" asp-area="bank" asp-controller="Transactions" asp-action="Index">Thanh toán NH</a>
+                            <a class="nav-link" id="bank" asp-area="bank" asp-controller="Transactions" asp-action="Index">Thanh toán NH</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" asp-area="" asp-controller="BankAccounts" asp-action="Index">Danh sách TKNH</a>
+                            <a class="nav-link" id="bankacount" asp-area="" asp-controller="BankAccounts" asp-action="Index">Danh sách TKNH</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" asp-area="" asp-controller="report" asp-action="Index">Tổng hợp</a>
+                            <a class="nav-link" id="report" asp-area="" asp-controller="report" asp-action="Index">Tổng hợp</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" asp-area="" asp-controller="TransactionsTotal" asp-action="Index">Danh sách chưa lưu ký</a>
+                            <a class="nav-link" id="notluuky" asp-area="" asp-controller="TransactionsTotal" asp-action="Index">Danh sách chưa lưu ký</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" asp-area="" asp-controller="OriginalListings" asp-action="Index">Danh sách gốc</a>
+                            <a class="nav-link" id="origin" asp-area="" asp-controller="OriginalListings" asp-action="Index">Danh sách gốc</a>
                         </li>
 
                     </ul>
@@ -98,30 +98,33 @@
         $(document).ready(function () {
             window.addEventListener("keyup", function(e){ if(e.keyCode == 27) history.back(); }, false);
             var current = location.pathname;
-            if (current !== '/') {
+            //if (current !== '/') {
 
 
-                $('.nav-item a').each(function () {
-                    var $this = $(this);
+            //    $('.nav-item a').each(function () {
+            //        var $this = $(this);
 
-                    // if the current path is like this link, make it active
-                    if ($this.attr('href').indexOf(current) !== -1) {
-                        if (current === '/Transactions') {
-                            if ($this.attr('href').indexOf(location.search) !== -1) {
-                                $this.addClass('active');
-                            }
-                        }
-                        else {
-                            $this.addClass('active');
-                        }
-                    } else
-                        if (current === '/Transactions/Pay') {
-                            if ($this.attr('href').indexOf('/Transactions') !== -1 && $this.attr('href').indexOf('?area=bank') !== -1) {
-                                $this.addClass('active');
-                            }
-                        }
-                })
-            }
+            //        // if the current path is like this link, make it active
+            //        if ($this.attr('href').indexOf(current) !== -1) {
+            //            if (current === '/Transactions') {
+            //                if ($this.attr('href').indexOf(location.search) !== -1) {
+            //                    $this.addClass('active');
+            //                }
+            //            }
+            //            else {
+            //                $this.addClass('active');
+            //            }
+            //        } else
+            //            if (current === '/Transactions/Pay') {
+            //                if ($this.attr('href').indexOf('/Transactions') !== -1 && $this.attr('href').indexOf('area=bank') !== -1) {
+            //                    $this.addClass('active');
+            //                }
+            //            }
+            //    });
+            //    $('')
+            //}
+          
+            $('#@TempData["url"]').addClass('active');
         });
     </script>
     @RenderSection("Scripts", required: false)

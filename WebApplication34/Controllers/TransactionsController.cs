@@ -26,13 +26,14 @@ namespace WebApplication34.Controllers
         }
 
         // GET: Transactions
-        public async Task<IActionResult> Index(string search, string area, string type, string year, int pageNumber = 1, string download = "")
+        public async Task<IActionResult> Index(string search, string area, string type, string year, int page= 1, int size = 20)
         {
+             TempData["url"] = area;
             ViewBag.search = search;
             ViewBag.area = area;
             ViewBag.type = type;
             ViewBag.year = year;
-            ViewBag.download = download;
+            ViewBag.size = size;
             var data = _context.Transaction.AsQueryable();
             if (!string.IsNullOrEmpty(search))
             {
@@ -63,7 +64,7 @@ namespace WebApplication34.Controllers
             ViewBag.total = (data.Sum(e => e.ReceiveMoney)??0).ToString("N0");
             ViewBag.notpay = (data.Where(e=>e.IsPaid==false).Sum(e => e.ReceiveMoney)??0).ToString("N0");
             ViewBag.paid = (data.Where(e=>e.IsPaid==true).Sum(e => e.ReceiveMoney)??0).ToString("N0");
-            return View(await PaginatedList<Transaction>.CreateAsync(data.AsNoTracking(), pageNumber, 20));
+            return View(await PaginatedList<Transaction>.CreateAsync(data.AsNoTracking(), page, size));
         }
 
         // GET: Transactions/Details/5
@@ -250,6 +251,11 @@ namespace WebApplication34.Controllers
                         else
                         {
                             //tới phiếu chi
+                            if(ids.Length == 1)
+                            {
+                                return RedirectToAction("Payment", new { id = data.First().Id });
+                                
+                            }
                         }
                     }
 

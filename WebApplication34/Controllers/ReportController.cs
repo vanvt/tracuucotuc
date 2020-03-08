@@ -16,9 +16,11 @@ namespace WebApplication34.Controllers
         public ReportController(SecuritiStockContext context)
         {
             _context = context;
+          
         }
         public IActionResult Index()
         {
+             TempData["url"] = "report";
             ReportByYearListVM reportByYearListVM = new ReportByYearListVM();
 
             var data = _context.Transaction.Where(e => e.IsPaid).GroupBy(e => e.Year).Select(e => new ReportByYearVM

@@ -1,0 +1,51 @@
+﻿
+@{
+    var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
+    var nextDisabled = !Model.HasNextPage ? "disabled" : "";
+}
+
+<ul class="pagination">
+
+    <li class="page-item @prevDisabled">
+        @* <a class="page-link " href="/Transactions?page=@(Model.IndexDisplay - 1 )"></a>*@
+        <a asp-action="Index"
+           asp-route-page="@(Model.IndexDisplay - 1 )"
+           asp-route-search="@ViewBag.search"
+           asp-route-year="@ViewBag.year"
+           asp-route-area="@ViewBag.area"
+           class="page-link">
+            Previous
+        </a>
+    </li>
+    @{
+
+        foreach (var item in Model.ListPageItem)
+        {
+            var isActive = (Model.PageIndex == item) ? "active" : "";
+            var isDisable = (Model.TotalPages < item) ? "disabled" : "";
+            @*<li class="page-item @isActive"><a class="page-link" href="/Transactions?page=@item">@item</a></li>*@
+            <li class="page-item @isActive @isDisable">
+                <a asp-action="Index"
+                   asp-route-page="@item"
+                   asp-route-search="@ViewBag.search"
+                   asp-route-year="@ViewBag.year"
+                   asp-route-area="@ViewBag.area"
+                   class="page-link">
+                    @item
+                </a>
+            </li>
+        }
+    }
+
+    <li class="page-item  @nextDisabled">
+        @* <a class="page-link" href="/Transactions?page=@(Model.IndexDisplay + 5)">Next</a>*@
+        <a asp-action="Index"
+           asp-route-page="@(Model.IndexDisplay + 5)"
+           asp-route-search="@ViewBag.search"
+           asp-route-year="@ViewBag.year"
+           asp-route-area="@ViewBag.area"
+           class="page-link">
+            Next
+        </a>
+    </li>
+</ul>

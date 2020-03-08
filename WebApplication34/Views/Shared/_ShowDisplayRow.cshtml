@@ -1,0 +1,35 @@
+﻿
+<div class="btn-group">
+    <button type="button" class="btn dropdown-toggle" data-toggle="dropdown">
+        @ViewBag.size hàng
+    </button>
+    <div class="dropdown-menu">
+        <a asp-action="Index"
+           asp-route-search="@ViewBag.search"
+           asp-route-year="@ViewBag.year"
+           asp-route-area="@ViewBag.area"
+            asp-route-type="@ViewBag.type"
+            asp-route-size="20"
+           class="dropdown-item">
+            20 hàng
+        </a>
+        <a asp-action="Index"
+           asp-route-search="@ViewBag.search"
+           asp-route-year="@ViewBag.year"
+           asp-route-area="@ViewBag.area"
+             asp-route-type="@ViewBag.type"
+           asp-route-size= "50"
+           class="dropdown-item">
+            50 hàng
+        </a>
+        <a asp-action="Index"
+           asp-route-search="@ViewBag.search"
+           asp-route-year="@ViewBag.year"
+           asp-route-area="@ViewBag.area"
+             asp-route-type="@ViewBag.type"
+            asp-route-size= "100"
+           class="dropdown-item">
+            100 hàng
+        </a>
+    </div>
+</div>

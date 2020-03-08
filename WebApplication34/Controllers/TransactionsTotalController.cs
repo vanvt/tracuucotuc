@@ -23,11 +23,13 @@ namespace WebApplication34.Controllers
         {
             _context = context;
             _mapper = mapper;
+            
         }
 
         // GET: Transactions
         public async Task<IActionResult> Index(string search, string area, string type, string year, int page = 1, int pageSize = 50)
         {
+             TempData["url"] = "notluuky";
             ViewBag.search = search;
             ViewBag.area = area;
             ViewBag.type = type;

@@ -21,14 +21,15 @@ namespace WebApplication34.Controllers
         public OriginalListingsController(SecuritiStockContext context)
         {
             _context = context;
+           
         }
 
         // GET: OriginalListings
-        public async Task<IActionResult> Index(int pageNumber = 1)
+        public async Task<IActionResult> Index(int page= 1)
         {
             var data = _context.OriginalListing.AsQueryable();
-
-            return View(await PaginatedList<OriginalListing>.CreateAsync(data.AsNoTracking(), pageNumber, 20));
+            TempData["url"] = "origin";
+            return View(await PaginatedList<OriginalListing>.CreateAsync(data.AsNoTracking(), page, 20));
         }
 
         // GET: OriginalListings/Details/5

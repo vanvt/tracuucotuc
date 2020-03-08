@@ -78,19 +78,4 @@
             <p style="text-align:center">Không tìm thấy dữ liệu!</p>
         }
     }
-    @{
-        var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
-        var nextDisabled = !Model.HasNextPage ? "disabled" : "";
-    }
-
-
-    <a asp-action="Index"
-       asp-route-pageNumber="@(Model.PageIndex - 1)"
-       class="btn btn-default @prevDisabled">
-        Previous
-    </a>
-    <a asp-action="Index"
-       asp-route-pageNumber="@(Model.PageIndex + 1)"
-       class="btn btn-default @nextDisabled">
-        Next
-    </a>
+<partial name="_Pagingvan" />

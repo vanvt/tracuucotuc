@@ -23,20 +23,22 @@ namespace WebApplication34.Controllers
         }
 
         // GET: BankAccounts
-        public async Task<IActionResult> Index(string search,int pageNumber = 1)
+        public async Task<IActionResult> Index(string search,int page= 1)
         {
+             TempData["url"] = "bankacount";
             ViewBag.search = search;
             var data = _context.BankAccount.AsQueryable();
             if (!string.IsNullOrEmpty(search))
             {
                 data = data.Where(e => e.CmndNumber.Contains(search));
             }
-            return View(await PaginatedList<BankAccount>.CreateAsync(data.AsNoTracking(), pageNumber, 20));
+            return View(await PaginatedList<BankAccount>.CreateAsync(data.AsNoTracking(), page, 20));
         }
 
         // GET: BankAccounts/Details/5
         public async Task<IActionResult> Details(long? id)
         {
+             TempData["url"] = "bankacount";
             if (id == null)
             {
                 return NotFound();
@@ -55,6 +57,7 @@ namespace WebApplication34.Controllers
         // GET: BankAccounts/Create
         public IActionResult Create()
         {
+             TempData["url"] = "bankacount";
             return View();
         }
 
@@ -78,6 +81,7 @@ namespace WebApplication34.Controllers
         // GET: BankAccounts/Edit/5
         public async Task<IActionResult> Edit(long? id)
         {
+             TempData["url"] = "bankacount";
             if (id == null)
             {
                 return NotFound();
@@ -98,6 +102,7 @@ namespace WebApplication34.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(long id, [Bind("Id,CmndNumber,Beneficiaries,NumberAccount,Bank,Created,Updated,CreatedBy,UpdateBy")] BankAccount bankAccount)
         {
+             TempData["url"] = "bankacount";
             if (id != bankAccount.Id)
             {
                 return NotFound();
@@ -167,6 +172,7 @@ namespace WebApplication34.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Import(ImportVM formFile)
         {
+             TempData["url"] = "bankacount";
             // upload
             var filePath = Path.GetTempFileName();
             using (var stream = new FileStream(filePath, FileMode.Create))
