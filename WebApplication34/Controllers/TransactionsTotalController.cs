@@ -26,7 +26,7 @@ namespace WebApplication34.Controllers
         }
 
         // GET: Transactions
-        public async Task<IActionResult> Index(string search, string area, string type, string year, int pageNumber = 1, string download = "")
+        public async Task<IActionResult> Index(string search, string area, string type, string year, int page = 1, int pageSize = 50)
         {
             ViewBag.search = search;
             ViewBag.area = area;
@@ -60,7 +60,7 @@ namespace WebApplication34.Controllers
                 data = data.Where(e => e.Year == yearInt);
             }
          
-            return View(await PaginatedList<Transaction>.CreateAsync(data.AsNoTracking(), pageNumber, 20));
+            return View(await PaginatedList<Transaction>.CreateAsync(data.AsNoTracking(), page, pageSize));
         }
 
         // GET: Transactions/Details/5
