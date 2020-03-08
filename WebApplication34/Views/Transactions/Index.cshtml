@@ -59,17 +59,17 @@
 
 @if (Model.Count() > 0)
 {
-
+     var type = ViewBag.area == "bank" ? "" : "none";
     @using (Html.BeginForm("Pay", "Transactions", FormMethod.Post, new { id = "formPay" }))
     {
 
         <table class="table table-hover">
             <thead>
                 <tr>
-                    @if (ViewBag.area == "bank")
-                    {
-                        <th><input type="checkbox" onchange="handleChange(this);" /></th>
-                    }
+                    @*@if (ViewBag.area == "bank")
+                    {*@
+                        <th><input type="checkbox" style="display:@type" onchange="handleChange(this);" /></th>
+                @*    }*@
 
                     <th>
                         CMND
@@ -112,15 +112,16 @@
             <tbody>
                 @foreach (var item in Model)
                 {
+                   
                     <tr>
                         <td>
                             @if (item.IsPaid)
                             {
-                                <input disabled type="checkbox" id="@item.Id" name="CheckedIDs" value="@item.Id" />
+                                <input disabled type="checkbox" style="display:@type" @ViewBag. id="@item.Id" name="CheckedIDs" value="@item.Id" />
                             }
                             else
                             {
-                                <input type="checkbox" id="@item.Id" name="CheckedIDs" value="@item.Id" />
+                                <input type="checkbox" style="display:@type" id="@item.Id" name="CheckedIDs" value="@item.Id" />
                             }
 
                         </td>
@@ -155,7 +156,7 @@
                             {
                                 @Html.DisplayFor(modelItem => item.PaidDate)
                             }
-                            @if (!item.IsPaid)
+                            @if (!item.IsPaid && ViewBag.area =="cash")
                             {
                                 <button class="btn btn-sm btn-success" onclick="handleSubmitSingle(@item.Id)">Thanh toán</button>
                             }
