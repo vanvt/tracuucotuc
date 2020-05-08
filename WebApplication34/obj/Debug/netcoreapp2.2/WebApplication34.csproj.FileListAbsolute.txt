@@ -55,4 +55,3 @@ C:\Users\votha\source\repos\WebApplication34\WebApplication34\obj\Debug\netcorea
 C:\Users\votha\source\repos\WebApplication34\WebApplication34\obj\Debug\netcoreapp2.2\Razor\Views\Paging.cshtml.g.cs
 C:\Users\votha\source\repos\WebApplication34\WebApplication34\obj\Debug\netcoreapp2.2\Razor\Views\Shared\_Pagingvan.cshtml.g.cs
 C:\Users\votha\source\repos\WebApplication34\WebApplication34\obj\Debug\netcoreapp2.2\Razor\Views\Shared\_ShowDisplayRow.cshtml.g.cs
-C:\Users\votha\source\repos\WebApplication34\WebApplication34\obj\Debug\netcoreapp2.2\WebApplication34.csprojAssemblyReference.cache
