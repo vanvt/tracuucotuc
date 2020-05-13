@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -28,6 +29,27 @@ namespace WebApplication34.Controllers
         // GET: Transactions
         public async Task<IActionResult> Index(string search, string area, string type, string year, int page= 1, int size = 20)
         {
+            var sql = @"
+/****** Script for SelectTopNRows command from SSMS  ******/
+SELECT TOP (1000) [id]
+      ,[cnmd]
+      ,[type]
+      ,[full_name]
+      ,[receive_money]
+      ,[tax]
+      ,[real_recevie_money]
+      ,[created]
+      ,[original_id]
+      ,[bank_account_id]
+      ,[is_paid]
+      ,[paid_date]
+      ,[batch]
+      ,[year]
+  FROM [SecuritiStock].[dbo].[transaction]
+  where full_name like @full_name
+";
+            SqlParameter parameter = new SqlParameter("full_name", "%anh%");
+            var test = _context.Transaction.FromSql(sql,parameter);
              TempData["url"] = area;
             ViewBag.search = search;
             ViewBag.area = area;
