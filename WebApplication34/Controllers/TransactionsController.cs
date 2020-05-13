@@ -50,6 +50,8 @@ SELECT TOP (1000) [id]
 ";
             SqlParameter parameter = new SqlParameter("full_name", "%anh%");
             var test = _context.Transaction.FromSql(sql,parameter);
+            ////
+            ////
              TempData["url"] = area;
             ViewBag.search = search;
             ViewBag.area = area;
