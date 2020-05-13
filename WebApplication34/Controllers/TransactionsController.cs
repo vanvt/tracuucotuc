@@ -66,6 +66,7 @@ SELECT TOP (1000) [id]
                 data = data.Where(e => e.BankAccountId == null);
             }
             ///xxxxxxxxx
+            ///.xxxxxxxxx
             else
             {
                 data = data.Where(e => e.BankAccountId != null);
